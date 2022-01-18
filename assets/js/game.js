@@ -7,7 +7,7 @@ var enemyNames = ['Roborto', 'Amy Android', 'Robo Trumble'];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
-// fight function (now with parameter for enemy's name)
+// Start of the fight function (now with parameter for enemy's name)
 var fight = function(enemyName) {
   while (playerHealth > 0 && enemyHealth > 0) {
     // ask player if they'd like to fight or run
@@ -22,14 +22,16 @@ var fight = function(enemyName) {
       if (confirmSkip) {
         window.alert(playerName + ' has decided to skip this fight. Goodbye!');
         // subtract money from playerMoney for skipping
-        playerMoney = playerMoney - 10;
+        playerMoney = Math.max(0, playerMoney - 10);
         console.log("playerMoney", playerMoney)
         break;
       }
     }
 
-    // remove enemy's health by subtracting the amount set in the playerAttack variable
-    enemyHealth = enemyHealth - playerAttack;
+    // generate random damage value based on player's attack power
+    var damage = randomNumber(playerAttack - 3, playerAttack);
+
+    enemyHealth = Math.max(0, enemyHealth - damage);
     console.log(
       playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
     );
@@ -48,7 +50,9 @@ var fight = function(enemyName) {
     }
 
     // remove players's health by subtracting the amount set in the enemyAttack variable
-    playerHealth = playerHealth - enemyAttack;
+    var damage = randomNumber(enemyAttack - 3, enemyAttack);
+
+    playerHealth = Math.max(0, playerHealth - damage);
     console.log(
       enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' health remaining.'
     );
@@ -64,10 +68,10 @@ var fight = function(enemyName) {
   }
 };
 
-// function to start a new game
+// Start of the startGame function to start a new game
 var startGame = function() {
   // reset player stats
-  playerHealth = 100;
+  playerHealth = randomNumber(40, 60);
   playerAttack = 10;
   playerMoney = 10;
 
@@ -82,7 +86,7 @@ var startGame = function() {
       var pickedEnemyName = enemyNames[i];
 
       // reset enemyHealth before starting new fight
-      enemyHealth = 50;
+      enemyHealth = Math.floor(Math.random() * 21) + 40;
 
       // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
       fight(pickedEnemyName);
@@ -109,7 +113,17 @@ var startGame = function() {
   endGame();
 };
 
-// function to end the entire game
+
+//Not sure where this goes?
+// Start of the randomNumber function to generate a random numeric value
+var randomNumber = function(40, 60) {
+  var value = Math.floor(Math.random() * (21)) + 40;
+
+  return value;
+};
+
+
+// Start endGame function to end the entire game
 var endGame = function() {
   window.alert("The game has now ended. Let's see how you did!");
 
@@ -130,7 +144,7 @@ var endGame = function() {
   }
 };
 
-// go to shop between battles function
+// Start of shop function to go to the shop between battles function
 var shop = function() {
   // ask player what they'd like to do
   var shopOptionPrompt = window.prompt(

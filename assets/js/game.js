@@ -16,8 +16,9 @@ var fight = function(enemyName) {
   while(enemyHealth > 0) {
     // place fight function code block here . . .
     for(var i = 0; i < enemyNames.length; i++) {
-        debugger;
-        fight(enemyNames[i]);
+        var pickedEnemyName = enemyNames[i];
+    enemyHealth = 50;
+    fight(pickedEnemyName);
       }
   }
 
@@ -62,7 +63,9 @@ if (promptFight === "fight" || promptFight === "FIGHT") {
     if (confirmSkip) {
       window.alert(playerName + " has decided to skip this fight. Goodbye!");
       // subtract money from playerMoney for skipping
-      playerMoney = playerMoney - 2;
+      playerMoney = playerMoney - 10;
+        console.log("playerMoney", playerMoney)
+        break;
     }
     // if no (false), ask question again by running fight() again
     else {
@@ -75,4 +78,4 @@ if (promptFight === "fight" || promptFight === "FIGHT") {
 
 
 // run fight function to start game
-
+fight();
